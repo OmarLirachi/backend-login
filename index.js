@@ -12,10 +12,20 @@ app.use(bodyparser.urlencoded({
 app.use(bodyparser.json())
 
 //Conexión a BD
+const url = `mongodb+srv://roma:roma@cluster0.pv28ecj.mongodb.net/${process.env.DBNAME}?retryWrites=true&w=majority`
+mongoose.connect(url,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => console.log('Conectado a la base de datos'))
+    .catch((error) => console.log('Error de conexión: ' + error))
+
 
 //Importar las rutas
+const authRoutes = require('./routes/auth')
 
 //Ruta para middleware
+app.use('/api/user', authRoutes)
+
 app.get('/', (req, res) => {
     res.json({
         estado: true,
