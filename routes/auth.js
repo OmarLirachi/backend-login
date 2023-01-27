@@ -90,4 +90,20 @@ router.post('/login', async (req, res) => {
     })
 })
 
+router.get('/getallusers', async (req, res) => {
+    try{
+        const users = await User.find({})
+        res.json({
+            message: "Usuarios",
+            data: users
+        })
+    } catch (error) {
+        res.json({
+            message: "Error",
+            error
+        })
+    }
+    
+})
+
 module.exports = router
